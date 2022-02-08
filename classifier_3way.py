@@ -435,6 +435,6 @@ elif max(yacc)-min(yacc)>3000:
 elif max(zacc)-min(zacc)>3000:
     print("Classification: Upward Lift")
 elif max(xacc)-min(xacc)<300 and max(yacc)-min(yacc)<300 and max(zacc)-min(zacc)<300:
-    print("Classification: Idling")
+    print("Classification: Idle")
 else:
     print("Classification: Uknown Movement")
