@@ -429,6 +429,6 @@ while count<75:
 
 
 if max(xacc)-min(xacc)<300 and max(yacc)-min(yacc)<300 and max(zacc)-min(zacc)<300:
-    print("Classification: Idling")
+    print("Classification: Idle")
 else:
     print("Classification: Non-Idle")
