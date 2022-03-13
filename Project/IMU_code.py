@@ -112,8 +112,8 @@ def kalmanFilterX ( accAngle, gyroRate, DT):
 
 	return KFangleX
 
-def on_message(client, userdata, message):							#wants to accept either (^, v, >) as an argument)
-	#print('message received')
+def on_message(client, userdata, message):
+	print('message received')
 	message_string = str(message.payload.decode("utf-8"))
 	disallowed_characters = "'"
 	for character in disallowed_characters:
@@ -136,7 +136,7 @@ def on_message(client, userdata, message):							#wants to accept either (^, v, 
 
 	sol = message_string
 	assert(len(sol) == 1)
-	#print(sol)
+	print(sol)
 	ans = ''
 
 
@@ -448,7 +448,7 @@ def on_message(client, userdata, message):							#wants to accept either (^, v, 
 
 		xang.append(gyroXangle)
 		count=count+1
-		#print('counting')
+		print('counting')
 
 
 
@@ -456,75 +456,75 @@ def on_message(client, userdata, message):							#wants to accept either (^, v, 
 
 	xang[xang == 0] = np.nan   #takes zeroes out of average
 	mean = np.nanmean(xang)
-	#print(mean)
+	print(mean)
 
 
 	if mean<-0.7: #upward movement of hand (instruct to hold hand when finished)
 		ans = '^'
 		if ans == sol:
-			#print(sol)
-			client2 = mqtt.Client('secondclient')
-			client2.connect_async('test.mosquitto.org')
-			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Correct!', qos=1)   #publishes here
-			client2.loop_stop()  
-			#rint('published1')
+			print(sol)
+			clienttemp = mqtt.Client('tempclient')
+			clienttemp.connect_async('test.mosquitto.org')
+			clienttemp.loop_start()
+			clienttemp.publish('ece180d/IMU2', 'Correct!', qos=1)
+			clienttemp.loop_stop()  
+			print('published1')
 		else:
 			#print(sol)
-			client2 = mqtt.Client('secondclient')
-			client2.connect_async('test.mosquitto.org')
-			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Incorrect- the correct answer is : ' + str(sol), qos=1)  #publisher should also update score and lives
-			client2.loop_stop()
-			#print('published2')
+			clienttemp = mqtt.Client('tempclient')
+			clienttemp.connect_async('test.mosquitto.org')
+			clienttemp.loop_start()
+			clienttemp.publish('ece180d/IMU2', 'Incorrect- the correct answer is : ' + str(sol), qos=1)  #publisher should also update score and lives
+			clienttemp.loop_stop()
+			print('published2')
 
 	elif mean>0.7: #downward movement of hand (instruct to hold hand when finished)
 		ans = 'v'
 		if ans == sol:
-			client2 = mqtt.Client('secondclient')
-			client2.connect_async('test.mosquitto.org')
-			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Correct!', qos=1)   #publishes here
-			client2.loop_stop() 
-			#print('published3')
+			clienttemp = mqtt.Client('tempclient')
+			clienttemp.connect_async('test.mosquitto.org')
+			clienttemp.loop_start()
+			clienttemp.publish('ece180d/IMU2', 'Correct!', qos=1)
+			clienttemp.loop_stop() 
+			print('published3')
 		else:
-			client2 = mqtt.Client('secondclient')
-			client2.connect_async('test.mosquitto.org')
-			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Incorrect- the correct answer is : ' + str(sol), qos=1)  #publisher should also update score and lives
-			client2.loop_stop()
-			#print('published4')
+			clienttemp = mqtt.Client('tempclient')
+			clienttemp.connect_async('test.mosquitto.org')
+			clienttemp.loop_start()
+			clienttemp.publish('ece180d/IMU2', 'Incorrect- the correct answer is : ' + str(sol), qos=1)  #publisher should also update score and lives
+			clienttemp.loop_stop()
+			print('published4')
 
 	elif mean>-0.7 and mean<0.7: #no movement of hand (instruct to hold hand when finished)
 		ans = '>'
 		if ans == sol:
-			client2 = mqtt.Client('secondclient')
-			client2.connect_async('test.mosquitto.org')
-			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Correct!', qos=1)   #publishes here
-			client2.loop_stop() 
-			#print('published5')
+			clienttemp = mqtt.Client('tempclient')
+			clienttemp.connect_async('test.mosquitto.org')
+			clienttemp.loop_start()
+			clienttemp.publish('ece180d/IMU2', 'Correct!', qos=1)
+			clienttemp.loop_stop() 
+			print('published5')
 		else:
-			client2 = mqtt.Client('secondclient')
-			client2.connect_async('test.mosquitto.org')
-			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Incorrect- the correct answer is : ' + str(sol), qos=1)  #publisher should also update score and lives
-			client2.loop_stop()
-			#print('published6')
+			clienttemp = mqtt.Client('tempclient')
+			clienttemp.connect_async('test.mosquitto.org')
+			clienttemp.loop_start()
+			clienttemp.publish('ece180d/IMU2', 'Incorrect- the correct answer is : ' + str(sol), qos=1)  #publisher should also update score and lives
+			clienttemp.loop_stop()
+			print('published6')
 
 
 
 
 
-client = mqtt.Client('firstclient')
-client.on_message = on_message
-client.connect_async('test.mosquitto.org')
-client.loop_start()
+client2 = mqtt.Client('secondclient')
+client2.on_message = on_message
+client2.connect_async('test.mosquitto.org')
+client2.loop_start()
 
-#print('running')
+print('running')
 
 while True:
-	client.subscribe('ece180d/IMU')
+	client2.subscribe('ece180d/IMU')
 
 
 
