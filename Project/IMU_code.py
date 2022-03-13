@@ -452,6 +452,7 @@ def on_message(client, userdata, message):
 		xang.append(gyroXangle)
 		count=count+1
 		print('counting')
+		print(gyroXangle)
 
 
 
