@@ -16,7 +16,7 @@ from pydub.playback import play
 
 def on_message(client, userdata, message):                  #This entire block is intended to run when melodies are received from the server
 															#it is the logic for which sound should be played through the speakers and also
-															#publishes the correct answer (^,V,>) to the IMU.
+															#publishes the correct answer (^,v,>) to the IMU.
 															#It also handles the IMU info being sent back and then publishes "Correct" or "Incorrect" to the client
 	ans = ''
 	message_string = str(message.payload.decode("utf-8"))  #changes input from bytes to string and cleans up for reading into array
