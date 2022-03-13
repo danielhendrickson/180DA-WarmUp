@@ -112,7 +112,7 @@ def kalmanFilterX ( accAngle, gyroRate, DT):
 
 	return KFangleX
 
-def on_message(client, userdata, message):
+def on_message(client, userdata, message):							#wants to accept either (^, v, >) as an argument)
 	#print('message received')
 	message_string = str(message.payload.decode("utf-8"))
 	disallowed_characters = "'"
@@ -466,7 +466,7 @@ def on_message(client, userdata, message):
 			client2 = mqtt.Client('secondclient')
 			client2.connect_async('test.mosquitto.org')
 			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Correct!', qos=1)
+			client2.publish('ece180d/IMU2', 'Correct!', qos=1)   #publishes here
 			client2.loop_stop()  
 			#rint('published1')
 		else:
@@ -484,7 +484,7 @@ def on_message(client, userdata, message):
 			client2 = mqtt.Client('secondclient')
 			client2.connect_async('test.mosquitto.org')
 			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Correct!', qos=1)
+			client2.publish('ece180d/IMU2', 'Correct!', qos=1)   #publishes here
 			client2.loop_stop() 
 			#print('published3')
 		else:
@@ -501,7 +501,7 @@ def on_message(client, userdata, message):
 			client2 = mqtt.Client('secondclient')
 			client2.connect_async('test.mosquitto.org')
 			client2.loop_start()
-			client2.publish('ece180d/IMU2', 'Correct!', qos=1)
+			client2.publish('ece180d/IMU2', 'Correct!', qos=1)   #publishes here
 			client2.loop_stop() 
 			#print('published5')
 		else:
