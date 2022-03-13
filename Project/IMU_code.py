@@ -17,6 +17,9 @@ from pydub import AudioSegment
 from pydub.playback import play
 
 
+															#ALL PRINT STATMENTS ARE STILL IN THIS CODE
+
+
 IMU.detectIMU()     #Detect if BerryIMU is connected.
 if(IMU.BerryIMUversion == 99):
 	print(" No BerryIMU found... exiting ")
